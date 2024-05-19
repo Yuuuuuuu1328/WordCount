@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <string.h> 
 
 int countCharacters(const char *filename);
 int countWords(const char *filename);
@@ -15,12 +16,12 @@ int main(int argc, char *argv[]) {
     const char *filename = argv[2];
 
     int result;
-    if (strcmp(param, "-c") == 0) {
+    if (strcmp(param, "-c") == 0) { 
         result = countCharacters(filename);
-        printf("Characters: %d\n", result);
+        printf("字符数: %d\n", result);
     } else if (strcmp(param, "-w") == 0) {
         result = countWords(filename);
-        printf("Words: %d\n", result);
+        printf("单词数: %d\n", result);
     } else {
         printf("Invalid parameter. Use '-c' for characters or '-w' for words.\n");
         return 1;

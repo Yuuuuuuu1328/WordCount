@@ -1,28 +1,33 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <ctype.h>
-#include <string.h> // 添加这一行来解决 strcmp 的声明问题
+#include <string.h> 
+#include <Windows.h>
 
-int countCharacters(const char *filename);
-int countWords(const char *filename);
 
-int main(int argc, char *argv[]) {
+int countCharacters(const char* filename);
+int countWords(const char* filename);
+
+int main(int argc, char* argv[]) {
+    SetConsoleOutputCP(CP_UTF8);
     if (argc != 3) {
         printf("Usage: %s [-c|-w] input_file_name\n", argv[0]);
         return 1;
     }
 
-    const char *param = argv[1];
-    const char *filename = argv[2];
+    const char* param = argv[1];
+    const char* filename = argv[2];
 
     int result;
-    if (strcmp(param, "-c") == 0) { // 现在 strcmp 已经被正确声明
+    if (strcmp(param, "-c") == 0) {
         result = countCharacters(filename);
-        printf("Characters: %d\n", result);
-    } else if (strcmp(param, "-w") == 0) {
+        printf("字符数: %d\n", result);
+    }
+    else if (strcmp(param, "-w") == 0) {
         result = countWords(filename);
-        printf("Words: %d\n", result);
-    } else {
+        printf("单词数: %d\n", result);
+    }
+    else {
         printf("Invalid parameter. Use '-c' for characters or '-w' for words.\n");
         return 1;
     }
@@ -30,8 +35,8 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-int countCharacters(const char *filename) {
-    FILE *file = fopen(filename, "r");
+int countCharacters(const char* filename) {
+    FILE* file = fopen(filename, "r");
     if (!file) {
         perror("Error opening file");
         return -1;
@@ -46,8 +51,8 @@ int countCharacters(const char *filename) {
     return count;
 }
 
-int countWords(const char *filename) {
-    FILE *file = fopen(filename, "r");
+int countWords(const char* filename) {
+    FILE* file = fopen(filename, "r");
     if (!file) {
         perror("Error opening file");
         return -1;
@@ -59,7 +64,8 @@ int countWords(const char *filename) {
     while ((ch = fgetc(file)) != EOF) {
         if (isspace(ch)) {
             inWord = false;
-        } else if (!inWord) {
+        }
+        else if (!inWord) {
             inWord = true;
             count++;
         }
